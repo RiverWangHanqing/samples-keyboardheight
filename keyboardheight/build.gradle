@@ -4,10 +4,13 @@ plugins {
 
 android {
     compileSdkVersion 33
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 33
+        versionCode 1
+        versionName "1.0.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
