@@ -24,8 +24,9 @@
 
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustPan"
-            android:theme="@style/Theme.AppCompat.Light">
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

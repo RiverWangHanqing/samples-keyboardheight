@@ -2,19 +2,19 @@ apply plugin: 'com.android.application'
 
 android {
 
-    compileSdkVersion 28
+    compileSdkVersion 33
     buildToolsVersion "28.0.3"
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 33
         versionName = "1.0.1"
         versionCode = 1001
         applicationId = "com.siebeprojects.samples.keyboardheight"
     }
 
     lintOptions {
-      abortOnError false
+        abortOnError false
     }
 
     signingConfigs {
@@ -22,6 +22,11 @@ android {
     }
 
     buildTypes {
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
