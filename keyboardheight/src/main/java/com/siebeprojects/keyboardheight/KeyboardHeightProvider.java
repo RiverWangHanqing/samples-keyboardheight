@@ -18,22 +18,16 @@
 package com.siebeprojects.keyboardheight;
 
 import android.app.Activity;
-
 import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.util.Log;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
-import android.util.DisplayMetrics;
-
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-
+import android.view.WindowInsets;
 import android.view.WindowManager.LayoutParams;
-
 import android.widget.PopupWindow;
 
 
@@ -136,9 +130,6 @@ public class KeyboardHeightProvider extends PopupWindow {
      */
     private void handleOnGlobalLayout() {
 
-        Point screenSize = new Point();
-        activity.getWindowManager().getDefaultDisplay().getSize(screenSize);
-
         Rect rect = new Rect();
         popupView.getWindowVisibleDisplayFrame(rect);
 
@@ -146,8 +137,26 @@ public class KeyboardHeightProvider extends PopupWindow {
         // and also using the status bar and navigation bar heights of the phone to calculate
         // the keyboard height. But this worked fine on a Nexus.
         int orientation = getScreenOrientation();
-        int keyboardHeight = screenSize.y - rect.bottom;
-        
+        int keyboardHeight;
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.M) {
+            Point screenSize = new Point();
+            activity.getWindowManager().getDefaultDisplay().getSize(screenSize);
+            keyboardHeight = screenSize.y - rect.bottom;
+        } else {
+            View decorView = activity.getWindow().getDecorView();
+            WindowInsets windowInsets = decorView.getRootWindowInsets();
+            int insetsTop;
+            int insetsBottom;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                insetsTop = windowInsets.getInsets(WindowInsets.Type.systemBars()).top;
+                insetsBottom = windowInsets.getInsets(WindowInsets.Type.systemBars()).bottom;
+            } else {
+                insetsTop = windowInsets.getSystemWindowInsetTop();
+                insetsBottom = windowInsets.getSystemWindowInsetBottom();
+            }
+            keyboardHeight = decorView.getHeight() - insetsTop - insetsBottom - rect.height();
+        }
+
         if (keyboardHeight == 0) {
             notifyKeyboardHeightChanged(0, orientation);
         }
