@@ -15,7 +15,7 @@
  * along with Siebe Projects samples.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.siebeprojects.samples.keyboardheight;
+package com.siebeprojects.keyboardheight;
 
 import android.app.Activity;
 
